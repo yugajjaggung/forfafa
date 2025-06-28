@@ -203,6 +203,23 @@
             align-items: center;
         }
         
+        /* Phone Mockup Image */
+        .phone-mockup-image {
+            width: 280px;
+            height: 560px;
+            border-radius: 35px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: float 6s ease-in-out infinite;
+            object-fit: contain;
+            display: block;
+            max-width: 100%;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
         .phone-mockup {
             width: 280px;
             height: 560px;
@@ -560,7 +577,7 @@
             font-weight: 600;
         }
         
-        .form-group input, .form-group select {
+        .form-group input, .form-group select, .form-group textarea {
             width: 100%;
             padding: 12px;
             border: 2px solid #e0e0e0;
@@ -569,7 +586,7 @@
             transition: border-color 0.3s;
         }
         
-        .form-group input:focus, .form-group select:focus {
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
             outline: none;
             border-color: #FF6B00;
         }
@@ -906,6 +923,11 @@
                 order: -1;
             }
             
+            .phone-mockup-image {
+                width: 240px;
+                height: 480px;
+            }
+            
             .phone-mockup {
                 width: 240px;
                 height: 480px;
@@ -1002,20 +1024,11 @@
                     </div>
                 </div>
                 
-                <div class="hero-visual">
-                    <div class="phone-mockup">
-                        <div class="phone-screen" id="phoneScreen">
-                            <div class="phone-content" id="phoneContent">
-                                <h3>아빠육아<br>힘내세요!<br>'포파파'가<br>있잖아요</h3>
-                                <div class="phone-logo">
-                                    <div class="phone-logo-icon"></div>
-                                    <div class="phone-logo-text">포파파</div>
-                                </div>
-                                <div class="phone-app-name">포파파</div>
-                            </div>
-                        </div>
+                    <div class="hero-visual">
+                        <img src="https://yugajjaggung.github.io/forfafa/forfafa_removebg_preview.png" 
+                             alt="포파파 앱 미리보기" 
+                             class="phone-mockup-image">
                     </div>
-                </div>
             </div>
         </div>
     </section>
@@ -1269,19 +1282,136 @@
                         <input type="email" id="email" name="email" required placeholder="포파파@gmail.com">
                     </div>
                     
+                    <!-- 첫째 아이 정보 (필수) -->
                     <div class="form-group">
-                        <label for="child-age">자녀 나이</label>
-                        <select id="child-age" name="child-age">
+                        <label for="first-child">첫째 아이 생년월일 *</label>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <select id="first-child-year" name="first-child-year" required style="flex: 1;">
+                                <option value="">년도</option>
+                                <option value="expecting-pre">예비</option>
+                                <!-- 2026년부터 2010년까지 -->
+                                <option value="2026">2026년</option>
+                                <option value="2025">2025년</option>
+                                <option value="2024">2024년</option>
+                                <option value="2023">2023년</option>
+                                <option value="2022">2022년</option>
+                                <option value="2021">2021년</option>
+                                <option value="2020">2020년</option>
+                                <option value="2019">2019년</option>
+                                <option value="2018">2018년</option>
+                                <option value="2017">2017년</option>
+                                <option value="2016">2016년</option>
+                                <option value="2015">2015년</option>
+                                <option value="2014">2014년</option>
+                                <option value="2013">2013년</option>
+                                <option value="2012">2012년</option>
+                                <option value="2011">2011년</option>
+                                <option value="2010">2010년</option>
+                                <option value="before2010">2010년 이전</option>
+                            </select>
+                            <select id="first-child-month" name="first-child-month" style="flex: 1;">
+                                <option value="">월</option>
+                                <option value="01">1월</option>
+                                <option value="02">2월</option>
+                                <option value="03">3월</option>
+                                <option value="04">4월</option>
+                                <option value="05">5월</option>
+                                <option value="06">6월</option>
+                                <option value="07">7월</option>
+                                <option value="08">8월</option>
+                                <option value="09">9월</option>
+                                <option value="10">10월</option>
+                                <option value="11">11월</option>
+                                <option value="12">12월</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- 둘째 아이 정보 (선택) -->
+                    <div class="form-group">
+                        <label for="second-child">둘째 아이 생년월일 (선택사항)</label>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <select id="second-child-year" name="second-child-year" style="flex: 1;">
+                                <option value="">년도</option>
+                                <option value="expecting-pre">예비</option>
+                                <option value="2026">2026년</option>
+                                <option value="2025">2025년</option>
+                                <option value="2024">2024년</option>
+                                <option value="2023">2023년</option>
+                                <option value="2022">2022년</option>
+                                <option value="2021">2021년</option>
+                                <option value="2020">2020년</option>
+                                <option value="2019">2019년</option>
+                                <option value="2018">2018년</option>
+                                <option value="2017">2017년</option>
+                                <option value="2016">2016년</option>
+                                <option value="2015">2015년</option>
+                                <option value="2014">2014년</option>
+                                <option value="2013">2013년</option>
+                                <option value="2012">2012년</option>
+                                <option value="2011">2011년</option>
+                                <option value="2010">2010년</option>
+                                <option value="before2010">2010년 이전</option>
+                            </select>
+                            <select id="second-child-month" name="second-child-month" style="flex: 1;">
+                                <option value="">월</option>
+                                <option value="01">1월</option>
+                                <option value="02">2월</option>
+                                <option value="03">3월</option>
+                                <option value="04">4월</option>
+                                <option value="05">5월</option>
+                                <option value="06">6월</option>
+                                <option value="07">7월</option>
+                                <option value="08">8월</option>
+                                <option value="09">9월</option>
+                                <option value="10">10월</option>
+                                <option value="11">11월</option>
+                                <option value="12">12월</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- 셋째 이상 여부 -->
+                    <div class="form-group">
+                        <div style="display: flex; align-items: center; padding: 12px 0;">
+                            <input type="checkbox" id="third-child" name="third-child" style="width: auto; margin: 0 10px 0 0; transform: scale(1.2);">
+                            <label for="third-child" style="margin: 0; cursor: pointer; font-weight: 600; color: #333;">
+                                셋째 이상 자녀가 있습니다
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 기대하는 기능 -->
+                    <div class="form-group">
+                        <label for="expected-features">포파파에서 가장 기대하는 기능 *</label>
+                        <select id="expected-features" name="expected-features" required>
                             <option value="">선택해주세요</option>
-                            <option value="expecting">예비 아빠 (임신 중)</option>
-                            <option value="0-1">0-1세</option>
-                            <option value="2-3">2-3세</option>
-                            <option value="4-5">4-5세</option>
-                            <option value="6-7">6-7세</option>
-                            <option value="8-10">8-10세</option>
-                            <option value="11+">11세 이상</option>
-                            <option value="multiple">여러 자녀</option>
+                            <option value="dad-friends">우리동네 아빠 친구 찾기</option>
+                            <option value="sports-activities">부자 스포츠 모임</option>
+                            <option value="community">아빠 커뮤니티 & 상담</option>
+                            <option value="kids-facilities">키즈 시설 지도 & 리뷰</option>
+                            <option value="kids-discount">키즈 시설 할인 혜택</option>
+                            <option value="parenting-info">육아 정책 & 정보</option>
+                            <option value="local-info">지역 정보 공유</option>
+                            <option value="all">모든 기능이 다 기대돼요</option>
+                            <option value="other">기타 (아래에 직접 입력)</option>
                         </select>
+                    </div>
+
+                    <!-- 기타 기대 기능 직접 입력 -->
+                    <div class="form-group" id="other-features-group" style="display: none;">
+                        <label for="other-features">기대하는 기능을 자세히 알려주세요</label>
+                        <textarea id="other-features" name="other-features" placeholder="포파파에서 어떤 기능을 가장 기대하시는지 자유롭게 적어주세요" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem; min-height: 80px; resize: vertical; font-family: inherit;"></textarea>
+                    </div>
+                    
+                    <!-- 거주 지역 -->
+                    <div class="form-group">
+                        <label for="address">거주 지역 *</label>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <input type="text" id="address" name="address" required placeholder="주소 검색 버튼을 클릭해주세요" readonly style="flex: 1;">
+                            <button type="button" id="addressBtn" style="background: #FF6B00; color: white; border: none; padding: 12px 16px; border-radius: 8px; cursor: pointer; white-space: nowrap; font-weight: 500;">주소 검색</button>
+                        </div>
+                        <input type="text" id="detailAddress" name="detailAddress" placeholder="상세주소 (동/호수 등)" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem; margin-top: 0.5rem;">
                     </div>
                     
                     <div class="form-group">
@@ -1391,8 +1521,8 @@
     </footer>
 
     <script>
-        // 웹훅 URL 설정
-        const WEBHOOK_URL = 'https://hook.eu2.make.com/ltnwax1a1g9d37vk8gqsbugtk67sjv6f';
+        // 웹훅 URL 설정 - 새로운 Make 웹훅으로 변경
+        const WEBHOOK_URL = 'https://hook.eu2.make.com/jvu5g7xxg7npvpmcuhyiqu0qg19no8an';
 
         // 다음 우편번호 서비스를 이용한 주소 검색
         function searchAddress() {
@@ -1521,7 +1651,13 @@
                 name: document.getElementById('name').value,
                 phone: document.getElementById('phone').value,
                 email: document.getElementById('email').value,
-                childAge: document.getElementById('child-age').value,
+                firstChildYear: document.getElementById('first-child-year').value,
+                firstChildMonth: document.getElementById('first-child-month').value,
+                secondChildYear: document.getElementById('second-child-year').value,
+                secondChildMonth: document.getElementById('second-child-month').value,
+                hasThirdChild: document.getElementById('third-child').checked,
+                expectedFeatures: document.getElementById('expected-features').value,
+                otherFeatures: document.getElementById('other-features').value,
                 address: document.getElementById('address').value,
                 detailAddress: document.getElementById('detailAddress').value,
                 privacyConsent: document.getElementById('privacy').checked,
@@ -1574,6 +1710,8 @@
                 const phone = document.getElementById('phone').value.trim();
                 const email = document.getElementById('email').value.trim();
                 const address = document.getElementById('address').value.trim();
+                const firstChildYear = document.getElementById('first-child-year').value;
+                const expectedFeatures = document.getElementById('expected-features').value;
                 const privacy = document.getElementById('privacy').checked;
                 
                 if (!privacy) {
@@ -1581,9 +1719,18 @@
                     return;
                 }
                 
-                if (!name || !phone || !email || !address) {
-                    alert('필수 항목을 모두 입력해주세요.');
+                if (!name || !phone || !email || !address || !firstChildYear || !expectedFeatures) {
+                    alert('필수 항목을 모두 입력해주세요.\n(이름, 핸드폰번호, 이메일, 거주지역, 첫째 아이 생년월일, 기대하는 기능)');
                     return;
+                }
+
+                // "기타" 선택시 상세 내용 입력 확인
+                if (expectedFeatures === 'other') {
+                    const otherFeatures = document.getElementById('other-features').value.trim();
+                    if (!otherFeatures) {
+                        alert('기대하는 기능을 자세히 입력해주세요.');
+                        return;
+                    }
                 }
 
                 // 이메일 형식 검증
@@ -1612,6 +1759,13 @@
                     showPopup();
                     document.getElementById('signupForm').reset();
                     updateConsentUI(); // 체크박스 UI 초기화
+                    
+                    // 기타 기능 입력란 숨기기
+                    var otherFeaturesGroup = document.getElementById('other-features-group');
+                    if (otherFeaturesGroup) {
+                        otherFeaturesGroup.style.display = 'none';
+                        document.getElementById('other-features').required = false;
+                    }
                 } else {
                     throw new Error('웹훅 전송 실패');
                 }
@@ -1749,6 +1903,24 @@
                     searchAddress();
                 });
                 console.log('🏠 주소 검색 버튼 이벤트 등록 완료');
+            }
+
+            // 기대하는 기능에서 "기타" 선택시 텍스트 입력란 표시
+            var expectedFeaturesSelect = document.getElementById('expected-features');
+            var otherFeaturesGroup = document.getElementById('other-features-group');
+            
+            if (expectedFeaturesSelect && otherFeaturesGroup) {
+                expectedFeaturesSelect.addEventListener('change', function() {
+                    if (this.value === 'other') {
+                        otherFeaturesGroup.style.display = 'block';
+                        document.getElementById('other-features').required = true;
+                    } else {
+                        otherFeaturesGroup.style.display = 'none';
+                        document.getElementById('other-features').required = false;
+                        document.getElementById('other-features').value = '';
+                    }
+                });
+                console.log('📝 기대 기능 선택 이벤트 등록 완료');
             }
 
             // 핸드폰번호 자동 하이픈 삽입
