@@ -17,9 +17,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-T56DQTTH');</script>
 <!-- End Google Tag Manager -->
+    <link rel="icon" type="image/png" href="https://yugajjaggung.github.io/forfafa/favicon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>포파파 - 아빠를 위한 육아 파트너</title>
+    <title>포파파 - 아빠를 위한 쉬운 육아 파트너</title>
     <meta name="description" content="아빠들의 육아 고민을 해결하는 전문 플랫폼. 아빠 친구 찾기, 부자 스포츠 모임, 육아 정보, 키즈 시설 정보까지 한번에!">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1436,22 +1437,51 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                         </div>
                         <input type="text" id="detailAddress" name="detailAddress" placeholder="상세주소 (동/호수 등)" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem; margin-top: 0.5rem;">
                     </div>
+
                     
-                    <!-- 세련된 개인정보 동의 UI -->
-                    <div class="privacy-consent" id="privacyConsent" onclick="toggleConsent()">
+                    <!-- 개인정보 동의 UI -->
+                    <div class="privacy-consent" id="privacyConsent" onclick="togglePrivacyConsent()">
                         <div class="consent-header">
                             <div class="consent-checkbox">
-                                <input type="checkbox" id="privacy" name="privacy" required onchange="updateConsentUI()">
+                                <input type="checkbox" id="privacy" name="privacy" required onchange="updatePrivacyConsentUI()">
                                 <div class="consent-checkmark"></div>
                             </div>
                             <div class="consent-title">
-                                개인정보 수집 및 이용에 동의합니다 <span class="consent-required">*</span>
+                                개인정보 수집 및 이용에 동의합니다 <span class="consent-required">(필수)</span>
                             </div>
                         </div>
                         <div class="consent-details">
                             <strong>수집목적:</strong> 서비스 출시 안내 및 창립 멤버 혜택 제공<br>
-                            <strong>수집항목:</strong> 이름, 연락처, 이메일, 자녀정보, 거주지역<br>
+                            <strong>수집항목:</strong> 이름, 연락처, 이메일, 자녀정보, 거주지역, 기대기능<br>
                             <strong>보유기간:</strong> 서비스 출시 후 1년 (또는 동의 철회시까지)
+                        </div>
+                    </div>
+
+                    <!-- 마케팅 동의 UI (새로 추가) -->
+                    <div class="marketing-consent" id="marketingConsent" onclick="toggleMarketingConsent()">
+                        <div class="consent-header">
+                            <div class="consent-checkbox">
+                                <input type="checkbox" id="marketing" name="marketing" onchange="updateMarketingConsentUI()">
+                                <div class="consent-checkmark"></div>
+                            </div>
+                            <div class="consent-title">
+                                마케팅 정보 수신에 동의합니다 <span class="consent-optional">(선택)</span>
+                            </div>
+                        </div>
+                        <div class="consent-details">
+                            <strong>수신내용:</strong> 포파파 출시 소식, 이벤트 안내, 아빠 육아 정보<br>
+                            <strong>수신방법:</strong> 이메일, SMS, 앱 푸시 알림<br>
+                            <strong>철회방법:</strong> 언제든지 앱 설정 또는 이메일 수신거부 가능
+                        </div>
+                        <div class="marketing-benefits">
+                            <strong>📱 마케팅 동의시 추가 혜택:</strong>
+                            <ul>
+                                <li>포파파 출시 알림 우선 발송</li>
+                                <li>아빠 육아 꿀팁 주간 뉴스레터</li>
+                                <li>키즈 시설 할인 쿠폰 정보</li>
+                                <li>지역별 아빠 모임 소식 알림</li>
+                                <li>육아 용품 특가 정보 우선 제공</li>
+                            </ul>
                         </div>
                     </div>
                     
@@ -1459,12 +1489,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                         🎁 사전 예약하고 선물받기!
                     </button>
                 </form>
-                
-                <!-- 성공 메시지 (인라인) -->
-                <div id="successMessage" style="display: none; background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); border: 1px solid #c3e6cb; color: #155724; padding: 1rem; border-radius: 8px; margin-top: 1rem; text-align: center;">
-                    <h4 style="margin: 0 0 0.5rem 0; color: #155724;">🎉 포파파 사전 예약 완료!</h4>
-                    <p style="margin: 0; font-size: 0.9rem;">축하합니다! 포파파 사전 예약이 완료되었습니다.<br>🎁 추첨을 통해 아빠를 위한 특별한 선물을 드려요!</p>
-                </div>
                 
                 <p style="text-align: center; margin-top: 1rem; font-size: 0.9rem; color: #666;">
                     * 사전 예약자에게만 런칭 소식과 추첨 결과를 알려드립니다<br>
