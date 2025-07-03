@@ -248,11 +248,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             position: relative;
         }
         
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-        
         .phone-screen {
             width: 100%;
             height: 100%;
@@ -665,6 +660,27 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             border-color: #FF6B00;
         }
         
+        /* 마케팅 동의 UI */
+        .marketing-consent {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .marketing-consent:hover {
+            border-color: #FF6B00;
+            box-shadow: 0 4px 12px rgba(255, 107, 0, 0.1);
+        }
+        
+        .marketing-consent.checked {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b3 100%);
+            border-color: #FF6B00;
+        }
+        
         .consent-header {
             display: flex;
             align-items: center;
@@ -742,6 +758,37 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         .consent-required {
             color: #FF6B00;
             font-weight: 600;
+        }
+        
+        .consent-optional {
+            color: #0066CC;
+            font-weight: 600;
+        }
+        
+        .marketing-benefits {
+            background: rgba(255,255,255,0.9);
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: #666;
+            line-height: 1.4;
+            margin-top: 0.5rem;
+        }
+        
+        .marketing-benefits ul {
+            list-style: none;
+            padding: 0;
+            margin: 0.5rem 0 0 0;
+        }
+        
+        .marketing-benefits li {
+            padding: 0.2rem 0;
+            font-size: 0.75rem;
+        }
+        
+        .marketing-benefits li:before {
+            content: '';
+            margin-right: 0.5rem;
         }
         
         .submit-btn {
@@ -1440,10 +1487,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
                     
                     <!-- 개인정보 동의 UI -->
-                    <div class="privacy-consent" id="privacyConsent" onclick="togglePrivacyConsent()">
+                    <div class="privacy-consent" id="privacyConsent" onclick="toggleConsent()">
                         <div class="consent-header">
                             <div class="consent-checkbox">
-                                <input type="checkbox" id="privacy" name="privacy" required onchange="updatePrivacyConsentUI()">
+                                <input type="checkbox" id="privacy" name="privacy" required onchange="updateConsentUI()">
                                 <div class="consent-checkmark"></div>
                             </div>
                             <div class="consent-title">
@@ -1474,7 +1521,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                             <strong>철회방법:</strong> 언제든지 앱 설정 또는 이메일 수신거부 가능
                         </div>
                         <div class="marketing-benefits">
-                            <strong>📱 마케팅 동의시 추가 혜택:</strong>
+                            <strong>마케팅 동의시 추가 혜택:</strong>
                             <ul>
                                 <li>포파파 출시 알림 우선 발송</li>
                                 <li>아빠 육아 꿀팁 주간 뉴스레터</li>
@@ -1566,22 +1613,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         function searchAddress() {
             console.log('🔍 주소 검색 시작');
             
-            // daum 객체가 로드되었는지 확인
-            if (typeof daum === 'undefined') {
-                console.error('❌ daum 객체가 정의되지 않음');
-                alert('주소 검색 서비스가 아직 로드되지 않았습니다.\n페이지를 새로고침 후 다시 시도해주세요.');
-                return;
-            }
-            
-            if (typeof daum.Postcode === 'undefined') {
-                console.error('❌ daum.Postcode가 정의되지 않음');
-                alert('주소 검색 서비스에 문제가 있습니다.\n잠시 후 다시 시도해주세요.');
-                return;
-            }
-            
             try {
-                console.log('✅ 다음 우편번호 팝업 생성 시작');
-                
                 new daum.Postcode({
                     oncomplete: function(data) {
                         console.log('✅ 주소 선택 완료:', data);
@@ -1589,16 +1621,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                         var addr = '';
                         var extraAddr = '';
 
-                        // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
                         if (data.userSelectedType === 'R') {
                             addr = data.roadAddress;
-                            console.log('도로명 주소 선택:', addr);
                         } else {
                             addr = data.jibunAddress;
-                            console.log('지번 주소 선택:', addr);
                         }
 
-                        // 참고항목 조합
                         if(data.userSelectedType === 'R'){
                             if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
                                 extraAddr += data.bname;
@@ -1612,74 +1640,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                         }
 
                         var fullAddress = addr + extraAddr;
-                        var addressInput = document.getElementById('address');
+                        document.getElementById('address').value = fullAddress;
                         
-                        if (addressInput) {
-                            addressInput.value = fullAddress;
-                            console.log('✅ 주소 입력 완료:', fullAddress);
-                            
-                            // 상세주소 필드로 포커스 이동
-                            var detailAddressInput = document.getElementById('detailAddress');
-                            if (detailAddressInput) {
-                                setTimeout(function() {
-                                    detailAddressInput.focus();
-                                }, 100);
-                            }
-                        } else {
-                            console.error('❌ 주소 입력 필드를 찾을 수 없음');
-                        }
-                    },
-                    onclose: function(state) {
-                        console.log('🔐 주소 검색 팝업 닫힘. 상태:', state);
-                        if(state === 'FORCE_CLOSE') {
-                            console.log('사용자가 팝업을 강제로 닫음');
-                        } else if(state === 'COMPLETE_INTERRUPT') {
-                            console.log('주소 선택을 완료하지 않고 닫음');
-                        }
-                    },
-                    width: '100%',
-                    height: '100%'
-                }).open({
-                    popupTitle: '🏠 주소 검색',
-                    left: (window.screen.width / 2) - (570 / 2),
-                    top: (window.screen.height / 2) - (420 / 2)
-                });
-                
-                console.log('✅ 주소 검색 팝업이 열렸습니다');
-                
-                // 팝업이 차단되었을 수도 있으니 확인
-                setTimeout(function() {
-                    var addressInput = document.getElementById('address');
-                    if (addressInput && addressInput.value === '') {
-                        console.log('💡 팝업이 차단되었을 수 있음 - 사용자에게 안내');
+                        // 상세주소 필드로 포커스 이동
+                        setTimeout(function() {
+                            document.getElementById('detailAddress').focus();
+                        }, 100);
                     }
-                }, 2000);
+                }).open();
                 
             } catch (error) {
                 console.error('❌ 주소 검색 오류:', error);
-                
-                // 팝업 차단 또는 기타 오류 시 대안 제공
-                if (error.message.includes('popup') || error.message.includes('blocked')) {
-                    alert('팝업이 차단되어 주소 검색이 불가능합니다.\n\n브라우저 설정에서 팝업을 허용하거나,\n주소를 직접 입력해주세요.\n\n예시: 서울 강남구 테헤란로 152');
-                    
-                    // 직접 입력 가능하도록 변경
-                    var addressInput = document.getElementById('address');
-                    if (addressInput) {
-                        addressInput.readOnly = false;
-                        addressInput.placeholder = '주소를 직접 입력해주세요';
-                        addressInput.focus();
-                    }
-                } else {
-                    alert('주소 검색 중 오류가 발생했습니다.\n주소를 직접 입력해주세요.\n\n' + error.message);
-                    
-                    // 직접 입력 가능하도록 변경
-                    var addressInput = document.getElementById('address');
-                    if (addressInput) {
-                        addressInput.readOnly = false;
-                        addressInput.placeholder = '주소를 직접 입력해주세요';
-                        addressInput.focus();
-                    }
-                }
+                alert('주소 검색 서비스에 문제가 있습니다. 주소를 직접 입력해주세요.');
+                document.getElementById('address').readOnly = false;
+                document.getElementById('address').placeholder = '주소를 직접 입력해주세요';
             }
         }
 
@@ -1699,6 +1673,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 address: document.getElementById('address').value,
                 detailAddress: document.getElementById('detailAddress').value,
                 privacyConsent: document.getElementById('privacy').checked,
+                marketingConsent: document.getElementById('marketing').checked,
                 submissionTime: new Date().toISOString(),
                 source: 'papapa_landing_page'
             };
@@ -1797,6 +1772,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     showPopup();
                     document.getElementById('signupForm').reset();
                     updateConsentUI(); // 체크박스 UI 초기화
+                    updateMarketingConsentUI(); // 마케팅 동의 UI 초기화
                     
                     // 기타 기능 입력란 숨기기
                     var otherFeaturesGroup = document.getElementById('other-features-group');
@@ -1859,79 +1835,31 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             }
         }
 
+        // 마케팅 동의 함수들
+        function toggleMarketingConsent() {
+            var checkbox = document.getElementById('marketing');
+            if (checkbox) {
+                checkbox.checked = !checkbox.checked;
+                updateMarketingConsentUI();
+            }
+        }
+
+        function updateMarketingConsentUI() {
+            var consent = document.getElementById('marketingConsent');
+            var checkbox = document.getElementById('marketing');
+            
+            if (consent && checkbox) {
+                if (checkbox.checked) {
+                    consent.classList.add('checked');
+                } else {
+                    consent.classList.remove('checked');
+                }
+            }
+        }
+
         // DOM 로드 완료 후 실행
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🚀 포파파 페이지 로드 완료');
-
-            // 다음 우편번호 서비스 스크립트 로드 확인 및 안내
-            function checkDaumPostcode() {
-                if (typeof daum !== 'undefined' && typeof daum.Postcode !== 'undefined') {
-                    console.log('✅ 다음 우편번호 서비스 로드 완료');
-                    
-                    // 주소 검색 버튼 활성화 및 텍스트 업데이트
-                    var addressBtn = document.getElementById('addressBtn');
-                    var addressInput = document.getElementById('address');
-                    
-                    if (addressBtn) {
-                        addressBtn.style.opacity = '1';
-                        addressBtn.disabled = false;
-                    }
-                    
-                    if (addressInput) {
-                        addressInput.placeholder = '주소 검색 버튼을 클릭해주세요';
-                    }
-                    
-                    return true;
-                } else {
-                    console.log('⏳ 다음 우편번호 서비스 로딩 중...');
-                    
-                    // 로딩 중 버튼 상태
-                    var addressBtn = document.getElementById('addressBtn');
-                    var addressInput = document.getElementById('address');
-                    
-                    if (addressBtn) {
-                        addressBtn.style.opacity = '0.7';
-                        addressBtn.disabled = true;
-                    }
-                    
-                    if (addressInput) {
-                        addressInput.placeholder = '주소 검색 서비스 로딩 중...';
-                    }
-                    
-                    return false;
-                }
-            }
-
-            // 초기 상태 확인
-            checkDaumPostcode();
-
-            // 스크립트 로드를 주기적으로 확인
-            var checkInterval = setInterval(function() {
-                if (checkDaumPostcode()) {
-                    clearInterval(checkInterval);
-                }
-            }, 500);
-
-            // 10초 후에도 로드되지 않으면 경고 및 대안 제시
-            setTimeout(function() {
-                if (!checkDaumPostcode()) {
-                    console.error('❌ 다음 우편번호 서비스 로드 실패');
-                    clearInterval(checkInterval);
-                    
-                    // 대안 안내
-                    var addressInput = document.getElementById('address');
-                    var addressBtn = document.getElementById('addressBtn');
-                    
-                    if (addressInput) {
-                        addressInput.placeholder = '주소를 직접 입력해주세요 (예: 서울 강남구 테헤란로 152)';
-                        addressInput.readOnly = false;
-                    }
-                    
-                    if (addressBtn) {
-                        addressBtn.style.display = 'none';
-                    }
-                }
-            }, 10000);
 
             // 주소 검색 버튼 이벤트 등록
             var addressBtn = document.getElementById('addressBtn');
